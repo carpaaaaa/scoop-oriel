@@ -1,0 +1,21 @@
+name: excavator
+
+# Looks for a new Oriel release every few hours and updates the manifest
+# (its version, URLs and SHA-256 from SHA256SUMS.txt) as Scoop's own buckets do.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  excavate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ScoopInstaller/GithubActions@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,54 @@
+{
+    "version": "0.1.11",
+    "description": "A free, open source browser for Windows: a column of tabs, spaces, Chrome extensions, ads and trackers blocked, no account. An unofficial port of Search, the browser for the Mac.",
+    "homepage": "https://oriel.charstudio.app/",
+    "license": "MIT",
+    "notes": [
+        "Oriel installs for your account with its own installer and updates itself.",
+        "It isn't code-signed yet, so Windows may ask before it runs. The installers' SHA-256 are in SHA256SUMS.txt on each release, and Scoop checks them."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/carpaaaaa/oriel/releases/download/v0.1.11/Oriel-Setup-0.1.11-x64.exe#/setup.exe",
+            "hash": "d2338d95cd27eee4d88cf94c2bd4f5babcc802db3c5dcc48121459bdb7805655"
+        },
+        "arm64": {
+            "url": "https://github.com/carpaaaaa/oriel/releases/download/v0.1.11/Oriel-Setup-0.1.11-arm64.exe#/setup.exe",
+            "hash": "d6bc73b372e0620b3adce2f895ae808a283e3d1ef1f61e49accbb78ba1af6f70"
+        }
+    },
+    "installer": {
+        "file": "setup.exe",
+        "args": [
+            "/S",
+            "/currentuser"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "$uninstall = Join-Path $env:LOCALAPPDATA 'Programs\\Oriel\\Uninstall Oriel.exe'",
+            "if (Test-Path $uninstall) { Start-Process -FilePath $uninstall -ArgumentList '/S', '/currentuser' -Wait }"
+        ]
+    },
+    "checkver": {
+        "github": "https://github.com/carpaaaaa/oriel"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/carpaaaaa/oriel/releases/download/v$version/Oriel-Setup-$version-x64.exe#/setup.exe",
+                "hash": {
+                    "url": "https://github.com/carpaaaaa/oriel/releases/download/v$version/SHA256SUMS.txt",
+                    "regex": "$sha256\\s+Oriel-Setup-$version-x64\\.exe"
+                }
+            },
+            "arm64": {
+                "url": "https://github.com/carpaaaaa/oriel/releases/download/v$version/Oriel-Setup-$version-arm64.exe#/setup.exe",
+                "hash": {
+                    "url": "https://github.com/carpaaaaa/oriel/releases/download/v$version/SHA256SUMS.txt",
+                    "regex": "$sha256\\s+Oriel-Setup-$version-arm64\\.exe"
+                }
+            }
+        }
+    }
+}

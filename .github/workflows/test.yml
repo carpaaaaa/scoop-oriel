@@ -1,0 +1,46 @@
+name: test
+
+# Installs Oriel from this bucket's manifest with Scoop on real Windows (x64
+# and ARM), checks the installer put it where it goes, then removes it.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, windows-11-arm]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scoop
+        shell: pwsh
+        run: |
+          Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+          Join-Path (Resolve-Path ~).Path 'scoop\shims' | Out-File -Append $env:GITHUB_PATH -Encoding utf8
+      # On this test machine only: nobody can click SmartScreen's question.
+      - name: SmartScreen off (test machine only)
+        shell: pwsh
+        run: |
+          New-Item -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Force | Out-Null
+          Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Name EnableSmartScreen -Value 0 -Type DWord
+      - name: Install
+        shell: pwsh
+        run: |
+          scoop install .\bucket\oriel.json
+          $exe = Join-Path $env:LOCALAPPDATA 'Programs\Oriel\Oriel.exe'
+          if (-not (Test-Path $exe)) { throw "Oriel.exe isn't where its installer puts it: $exe" }
+          (Get-Item $exe).VersionInfo | Format-List ProductName, ProductVersion, FileVersion
+          scoop list
+      - name: Uninstall
+        shell: pwsh
+        run: |
+          scoop uninstall oriel
+          $exe = Join-Path $env:LOCALAPPDATA 'Programs\Oriel\Oriel.exe'
+          for ($i = 0; $i -lt 20 -and (Test-Path $exe); $i++) { Start-Sleep 2 }
+          if (Test-Path $exe) { throw 'Oriel is still there after scoop uninstall' }
