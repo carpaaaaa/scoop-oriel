@@ -1,5 +1,5 @@
 {
-    "version": "0.1.11",
+    "version": "0.1.12",
     "description": "A free, open source browser for Windows: a column of tabs, spaces, Chrome extensions, ads and trackers blocked, no account. An unofficial port of Search, the browser for the Mac.",
     "homepage": "https://oriel.charstudio.app/",
     "license": "MIT",
@@ -9,12 +9,12 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/carpaaaaa/oriel/releases/download/v0.1.11/Oriel-Setup-0.1.11-x64.exe#/setup.exe",
-            "hash": "d2338d95cd27eee4d88cf94c2bd4f5babcc802db3c5dcc48121459bdb7805655"
+            "url": "https://github.com/carpaaaaa/oriel/releases/download/v0.1.12/Oriel-Setup-0.1.12-x64.exe#/setup.exe",
+            "hash": "096521a8c3a7ec3c9d144209329c69c18a3f255413984bb3c098b1a0f6ddf8ea"
         },
         "arm64": {
-            "url": "https://github.com/carpaaaaa/oriel/releases/download/v0.1.11/Oriel-Setup-0.1.11-arm64.exe#/setup.exe",
-            "hash": "d6bc73b372e0620b3adce2f895ae808a283e3d1ef1f61e49accbb78ba1af6f70"
+            "url": "https://github.com/carpaaaaa/oriel/releases/download/v0.1.12/Oriel-Setup-0.1.12-arm64.exe#/setup.exe",
+            "hash": "be97c5eccecfc214f5624bc154416676d1c9cea0d1212979dec06ebe98c42d99"
         }
     },
     "installer": {
