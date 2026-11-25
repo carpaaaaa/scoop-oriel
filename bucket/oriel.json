@@ -22,7 +22,8 @@
         "args": [
             "/S",
             "/currentuser"
-        ]
+        ],
+        "keep": true
     },
     "uninstaller": {
         "script": [
